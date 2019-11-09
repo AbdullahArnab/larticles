@@ -1950,9 +1950,31 @@ __webpack_require__.r(__webpack_exports__);
 
           _this3.fetchArticles();
         });
+      } else {
+        fetch('api/article', {
+          method: 'put',
+          body: JSON.stringify(this.article),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.article.title = '';
+          _this3.article.body = '';
+          alert('Article Updated');
+
+          _this3.fetchArticles();
+        });
       }
     },
-    editArticle: function editArticle() {}
+    editArticle: function editArticle(article) {
+      this.edit = true;
+      this.article.id = article.id;
+      this.article.article_id = article.id;
+      this.article.title = article.title;
+      this.article.body = article.body;
+    }
   }
 });
 
@@ -37440,23 +37462,23 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-danger",
+                staticClass: "btn btn-warning mb-2",
                 on: {
                   click: function($event) {
-                    return _vm.deleteArticle(article.id)
+                    return _vm.editArticle(article)
                   }
                 }
               },
-              [_vm._v("Delete")]
+              [_vm._v("Edit")]
             ),
             _vm._v(" "),
             _c(
               "button",
               {
-                staticClass: "btn btn-warning",
+                staticClass: "btn btn-danger",
                 on: {
                   click: function($event) {
-                    return _vm.editArticle(article)
+                    return _vm.deleteArticle(article.id)
                   }
                 }
               },
